@@ -25,10 +25,40 @@ class UserProfile:
     Represents a user's taste preferences.
     Required by tests/test_recommender.py
     """
-    favorite_genre: str
-    favorite_mood: str
-    target_energy: float
-    likes_acoustic: bool
+    genre: str
+    mood: str
+    energy: float
+    artist: str = ""
+
+def explain_song(user_prefs: UserProfile, song: Song) -> str:
+    parts = []
+    if song.genre.lower() == user_prefs.genre.lower():
+        parts.append(f"matches your genre ({song.genre})")
+    if song.mood.lower() == user_prefs.mood.lower():
+        parts.append(f"matches your mood ({song.mood})")
+    if abs(user_prefs.energy - song.energy) <= 0.2:
+        parts.append(f"energy level is close to your target ({song.energy:.2f})")
+    if user_prefs.artist and song.artist.lower() == user_prefs.artist.lower():
+        parts.append(f"by your artist ({song.artist})")
+    if not parts:
+        return f"'{song.title}' by {song.artist} is a general recommendation."
+    return f"'{song.title}' by {song.artist}: {', '.join(parts)}."
+
+
+def score_song(user_prefs: UserProfile, song: Song) -> float:
+    """
+    Scores a song against user preferences.
+    score = (genre match × 0.35) + (mood match × 0.30)
+          + (1 - |target_energy - song.energy|) × 0.25
+          + (artist match × 0.10)
+    """
+    genre_match = 1.0 if song.genre.lower() == user_prefs.genre.lower() else 0.0
+    mood_match = 1.0 if song.mood.lower() == user_prefs.mood.lower() else 0.0
+    energy_score = 1.0 - abs(user_prefs.energy - song.energy)
+    artist_match = 1.0 if user_prefs.artist and song.artist.lower() == user_prefs.artist.lower() else 0.0
+
+    return (genre_match * 0.35) + (mood_match * 0.30) + (energy_score * 0.25) + (artist_match * 0.10)
+
 
 class Recommender:
     """
@@ -39,12 +69,11 @@ class Recommender:
         self.songs = songs
 
     def recommend(self, user: UserProfile, k: int = 5) -> List[Song]:
-        # TODO: Implement recommendation logic
-        return self.songs[:k]
+        scored = sorted(self.songs, key=lambda s: score_song(user, s), reverse=True)
+        return scored[:k]
 
     def explain_recommendation(self, user: UserProfile, song: Song) -> str:
-        # TODO: Implement explanation logic
-        return "Explanation placeholder"
+        return explain_song(user, song)
 
 def load_songs(csv_path: str) -> List[Dict]:
     """
@@ -60,6 +89,26 @@ def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tup
     Functional implementation of the recommendation logic.
     Required by src/main.py
     """
-    # TODO: Implement scoring and ranking logic
-    # Expected return format: (song_dict, score, explanation)
-    return []
+    user = UserProfile(
+        genre=user_prefs.get("genre", ""),
+        mood=user_prefs.get("mood", ""),
+        energy=float(user_prefs.get("energy", 0.5)),
+        artist=user_prefs.get("artist", ""),
+    )
+    song_objects = [
+        Song(
+            id=int(s.get("id", 0)),
+            title=s.get("title", ""),
+            artist=s.get("artist", ""),
+            genre=s.get("genre", ""),
+            mood=s.get("mood", ""),
+            energy=float(s.get("energy", 0.5)),
+            tempo_bpm=float(s.get("tempo_bpm", 0)),
+            valence=float(s.get("valence", 0)),
+            danceability=float(s.get("danceability", 0)),
+            acousticness=float(s.get("acousticness", 0)),
+        )
+        for s in songs
+    ]
+    scored = sorted(zip(songs, song_objects), key=lambda pair: score_song(user, pair[1]), reverse=True)
+    return [(orig, score_song(user, s), explain_song(user, s)) for orig, s in scored[:k]]
