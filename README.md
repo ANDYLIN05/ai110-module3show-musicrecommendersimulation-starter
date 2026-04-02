@@ -41,7 +41,7 @@ Some prompts to answer:
   Return the top k (default 5)
 
 You can include a simple diagram or bullet list if helpful.
-
+  [UML Design](uml_design.md)
 ---
 
 ## Getting Started
