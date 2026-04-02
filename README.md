@@ -22,10 +22,23 @@ Explain your design in plain language.
 Some prompts to answer:
 
 - What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
+  Categorical: genre, mood, artist, title
+  Numerical (0–1 scale): energy, valence, danceability, acousticness
+  Numerical (raw): tempo_bpm
+
 - What information does your `UserProfile` store
+  favorite_genre: the genre they want matched (e.g. "lofi")
+  favorite_mood: the mood they want matched (e.g. "chill")
+  target_energy: a float (0–1) representing their desired intensity level
+  favorite_artist: all music associated with that artist
+
 - How does your `Recommender` compute a score for each song
+  score = (genre match × 0.35) + (mood match  × 0.30) + (1 - |target_energy - song.energy|) × 0.25 + (artist match × 0.10)
+
 - How do you choose which songs to recommend
+  Score every song using the formula above
+  Sort all songs by score descending
+  Return the top k (default 5)
 
 You can include a simple diagram or bullet list if helpful.
 
