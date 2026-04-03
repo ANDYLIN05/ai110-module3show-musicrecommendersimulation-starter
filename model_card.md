@@ -31,9 +31,7 @@
   The model checks whether the song's genre and mood match the user's preferences (earning full credit or none), then calculates how close the song's energy is to the user's target, and adds a small bonus if the artist matches — each piece is multiplied by its weight and added together to produce a final score between 0 and 1.
 
 - What changes did you make from the starter logic  
-  Artist preference was added as a fourth scoring factor with a 10% weight, and the remaining weights were tuned so genre (35%), mood (30%), and energy (25%) reflect how most listeners prioritize those qualities.  
-
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+  Artist preference was added as a fourth scoring factor with a 10% weight, and the remaining weights were tuned so genre (35%), mood (30%), and energy (25%) reflect how most listeners prioritize those qualities.
 
 ---
 
@@ -72,7 +70,7 @@ Avoid code here. Pretend you are explaining the idea to a friend who does not pr
   The system does not account for listening history, song popularity, or tempo preferences beyond what is stored in the user profile. It also ignores attributes like danceability, valence, and acousticness even though they are present in the dataset, meaning two very different sounding songs can receive identical scores.
 
 - Genres or moods that are underrepresented  
-  If the dataset contains far more songs in certain genres like Pop or Hip-Hop, users who prefer niche genres like Jazz or Classical may receive lower-quality recommendations simply because there are fewer candidates to choose from. Similarly, moods that appear less frequently in the catalog will produce results that rely more on genre and energy matches, which may not feel accurate.
+  If the dataset contains far more songs in certain genres like Pop or LoFi, users who prefer niche genres like Jazz or Indie Pop may receive lower-quality recommendations simply because there are fewer candidates to choose from. Similarly, moods that appear less frequently in the catalog will produce results that rely more on genre and energy matches, which may not feel accurate.
 
 - Cases where the system overfits to one preference  
   A user who specifies a favorite artist can see their top results dominated almost entirely by that artist, even when other songs would be a better overall fit. During our sensitivity test, doubling the energy weight caused rankings to shift heavily toward energy matches while ignoring whether the songs fit the user's genre or mood.
