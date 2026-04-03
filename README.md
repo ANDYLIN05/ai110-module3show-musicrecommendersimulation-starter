@@ -27,10 +27,10 @@ Some prompts to answer:
   Numerical (raw): tempo_bpm
 
 - What information does your `UserProfile` store
-  favorite_genre: the genre they want matched (e.g. "lofi")
-  favorite_mood: the mood they want matched (e.g. "chill")
+  genre: the genre they want matched (e.g. "lofi")
+  mood: the mood they want matched (e.g. "chill")
   target_energy: a float (0–1) representing their desired intensity level
-  favorite_artist: all music associated with that artist
+  artist: all music associated with that artist
 
 - How does your `Recommender` compute a score for each song
   score = (genre match × 0.35) + (mood match  × 0.30) + (1 - |target_energy - song.energy|) × 0.25 + (artist match × 0.10)
@@ -81,7 +81,6 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
 
 - What happened when you changed the weight on genre from 2.0 to 0.5
 - What happened when you added tempo or valence to the score

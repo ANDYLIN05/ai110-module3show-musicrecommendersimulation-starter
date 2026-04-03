@@ -66,9 +66,16 @@ Where the system struggles or behaves unfairly.
 Prompts:  
 
 - Features it does not consider  
+  The system does not account for listening history, song popularity, or tempo preferences beyond what is stored in the user profile. It also ignores attributes like danceability, valence, and acousticness even though they are present in the dataset, meaning two very different sounding songs can receive identical scores.
+
 - Genres or moods that are underrepresented  
+  If the dataset contains far more songs in certain genres like Pop or Hip-Hop, users who prefer niche genres like Jazz or Classical may receive lower-quality recommendations simply because there are fewer candidates to choose from. Similarly, moods that appear less frequently in the catalog will produce results that rely more on genre and energy matches, which may not feel accurate.
+
 - Cases where the system overfits to one preference  
+  A user who specifies a favorite artist can see their top results dominated almost entirely by that artist, even when other songs would be a better overall fit. During our sensitivity test, doubling the energy weight caused rankings to shift heavily toward energy matches while ignoring whether the songs fit the user's genre or mood.
+
 - Ways the scoring might unintentionally favor some users  
+  Users whose preferences align with the most common genre and mood combinations in the dataset will consistently receive higher scoring recommendations than users with less common tastes. The fixed weights also assume that genre is always more important than mood, which may not reflect how every listener actually prioritizes their preferences.
 
 ---
 
@@ -79,9 +86,16 @@ How you checked whether the recommender behaved as expected.
 Prompts:  
 
 - Which user profiles you tested  
+  Profiles with different combinations of genre, mood, and energy levels were tested, including a user with a strong genre preference, a user with a favorite artist specified, and a user whose preferences did not closely match many songs in the catalog.
+
 - What you looked for in the recommendations  
+  The goal was to check whether the top ranked songs actually matched the user's genre and mood, and whether the scores reflected the expected weight distribution across all four factors.
+
 - What surprised you  
+  It was surprising how much the rankings shifted when the mood check was temporarily removed, songs that previously ranked near the bottom got a great increase in scoring result, showing how heavily mood was influencing results even compared to genre. The sensitivity test made it clear that small weight changes have a noticeable impact on what gets recommended.
+
 - Any simple tests or comparisons you ran  
+  A side by side comparison of the original scoring versus a modified version with mood removed and energy doubled was run to observe how the top five results changed. Individual song scores were also traced manually to confirm the formula was computing each component correctly.
 
 No need for numeric metrics unless you created some.
 
