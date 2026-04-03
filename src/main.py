@@ -18,19 +18,20 @@ def main() -> None:
     print(f"Loaded songs: {len(songs)}")
     print() 
     
-    # Starter example profile
-    user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
+    profiles = [
+        {"name": "Pop Fan",      "genre": "pop",        "mood": "happy",    "energy": 0.8},
+        {"name": "Rock Head",    "genre": "rock",       "mood": "energetic","energy": 0.9},
+        {"name": "Chill Vibes",  "genre": "lo-fi",      "mood": "calm",     "energy": 0.3},
+        {"name": "Jazz Lover",   "genre": "jazz",       "mood": "romantic", "energy": 0.5},
+    ]
 
-    recommendations = recommend_songs(user_prefs, songs, k=5)
-
-    print("\nTop recommendations:\n")
-    for rec in recommendations:
-        # You decide the structure of each returned item.
-        # A common pattern is: (song, score, explanation)
-        song, score, explanation = rec
-        print(f"{song['title']} - Score: {score:.2f}")
-        print(f"Because: {explanation}")
-        print()
+    for profile in profiles:
+        print(f"\n=== {profile['name']} ===")
+        recommendations = recommend_songs(profile, songs, k=5)
+        for song, score, explanation in recommendations:
+            print(f"{song['title']} - Score: {score:.2f}")
+            print(f"Because: {explanation}")
+            print()
 
 
 if __name__ == "__main__":

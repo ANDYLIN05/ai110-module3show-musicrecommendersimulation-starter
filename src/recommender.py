@@ -54,7 +54,7 @@ def score_song(user_prefs: UserProfile, song: Song) -> float:
     """
     genre_match = 1.0 if song.genre.lower() == user_prefs.genre.lower() else 0.0
     mood_match = 1.0 if song.mood.lower() == user_prefs.mood.lower() else 0.0
-    energy_score = 1.0 - abs(user_prefs.energy - song.energy)
+    energy_score = max(0.0, 1.0 - abs(user_prefs.energy - song.energy))
     artist_match = 1.0 if user_prefs.artist and song.artist.lower() == user_prefs.artist.lower() else 0.0
 
     return (genre_match * 0.35) + (mood_match * 0.30) + (energy_score * 0.25) + (artist_match * 0.10)
@@ -110,5 +110,9 @@ def recommend_songs(user_prefs: Dict, songs: List[Dict], k: int = 5) -> List[Tup
         )
         for s in songs
     ]
-    scored = sorted(zip(songs, song_objects), key=lambda pair: score_song(user, pair[1]), reverse=True)
-    return [(orig, score_song(user, s), explain_song(user, s)) for orig, s in scored[:k]]
+    scored = sorted(
+        ((orig, s, score_song(user, s)) for orig, s in zip(songs, song_objects)),
+        key=lambda t: t[2],
+        reverse=True,
+    )
+    return [(orig, sc, explain_song(user, s)) for orig, s, sc in scored[:k]]
