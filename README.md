@@ -104,7 +104,7 @@ You can add more tests in `tests/test_recommender.py`.
 [**Model Card**](model_card.md)
 
 - About how recommenders turn data into predictions
-  Building this system made it clear that a recommender is really just a scoring machine — it converts messy human preferences into numbers, applies a formula, and returns whatever ranks highest. The tricky part is choosing what to measure and how much each factor should matter, because those weight decisions quietly shape every result the user ever sees.
+  Building this system made it clear that a recommender is really just a scoring machine, it converts messy human preferences into numbers, applies a formula, and returns whatever ranks highest. The tricky part is choosing what to measure and how much each factor should matter, because those weight decisions quietly shape every result the user ever sees.
 
 - About where bias or unfairness could show up in systems like this
   The biggest source of bias I noticed is catalog representation: genres like lofi and pop had multiple songs while jazz had only two, so users who prefer jazz will almost always get weaker recommendations through no fault of their own. The fixed weights also assume everyone cares about genre more than mood, but that assumption may not hold for every listener, meaning the system is quietly built around one type of user.
