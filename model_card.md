@@ -70,7 +70,7 @@
   The system does not account for listening history, song popularity, or tempo preferences beyond what is stored in the user profile. It also ignores attributes like danceability, valence, and acousticness even though they are present in the dataset, meaning two very different sounding songs can receive identical scores.
 
 - Genres or moods that are underrepresented  
-  If the dataset contains far more songs in certain genres like Pop or LoFi, users who prefer niche genres like Jazz or Indie Pop may receive lower-quality recommendations simply because there are fewer candidates to choose from. Similarly, moods that appear less frequently in the catalog will produce results that rely more on genre and energy matches, which may not feel accurate.
+  If the dataset contains far more songs in certain genres like Pop or LoFi, users who prefer niche genres like Jazz or Indie Pop may receive lower quality recommendations simply because there are fewer candidates to choose from. Similarly, moods that appear less frequently in the catalog will produce results that rely more on genre and energy matches, which may not feel accurate.
 
 - Cases where the system overfits to one preference  
   A user who specifies a favorite artist can see their top results dominated almost entirely by that artist, even when other songs would be a better overall fit. During our sensitivity test, doubling the energy weight caused rankings to shift heavily toward energy matches while ignoring whether the songs fit the user's genre or mood.
@@ -120,7 +120,7 @@
   I learned that recommender systems are fundamentally about translating human preferences into math, and that the hard part is not the calculation itself but deciding which features matter and how much weight each one deserves.
 
 - Something unexpected or interesting you discovered  
-  It was surprising how dramatically the rankings shifted when even one weight was adjusted — removing mood entirely caused songs that previously ranked last to jump into the top results, which showed how much hidden influence a single factor can carry.
+  It was surprising how dramatically the rankings shifted when even one weight was adjusted removing mood entirely caused songs that previously ranked last to jump into the top results, which showed how much hidden influence a single factor can carry.
 
 - How this changed the way you think about music recommendation apps  
   I now realize that every playlist Spotify or YouTube generates reflects someone's decisions about what to measure and prioritize, meaning the recommendations I receive say as much about the system's design choices as they do about my actual taste.  

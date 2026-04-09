@@ -79,7 +79,7 @@ You can add more tests in `tests/test_recommender.py`.
   When the genre weight was lowered, songs from non-matching genres started climbing into the top results because mood and energy alone were enough to push them up. This showed how dominant genre is in shaping recommendations when it carries the most weight.
 
 - What happened when you added tempo or valence to the score
-  Adding valence caused songs with high happiness scores like "Sunrise City" and "Summer Parade" to rank higher for happy-mood users. However, it also introduced noise for users whose mood preference did not map cleanly onto valence values, making some results feel less accurate.
+  Adding valence caused songs with high happiness scores like "Sunrise City" and "Summer Parade" to rank higher for happy mood users. However, it also introduced noise for users whose mood preference did not map cleanly onto valence values, making some results feel less accurate.
 
 - How did your system behave for different types of users
   A chill lofi user consistently received LoRoom and Paper Lanterns songs at the top, while an intense rock user saw Voltline tracks dominate every time. A user with niche preferences like jazz-relaxed received lower overall scores simply because fewer catalog songs matched both genre and mood simultaneously.
