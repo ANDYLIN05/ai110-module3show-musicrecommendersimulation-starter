@@ -9,7 +9,7 @@
 ## 2. Intended Use  
 
 - What kind of recommendations does it generate  
-  It generates a ranked list of up to 5 songs from a 20-track catalog based on how closely each song matches the user's genre, mood, energy, and optionally their favorite artist.
+  It generates a ranked list of up to 5 songs from a 20 track catalog based on how closely each song matches the user's genre, mood, energy, and optionally their favorite artist.
 
 - What assumptions does it make about the user  
   It assumes the user can clearly express a single preferred genre, mood, and a target energy level between 0 and 1, and that these preferences are stable and equally weighted across all listeners.
@@ -28,7 +28,7 @@
   The user tells the system their preferred genre, preferred mood, and a target energy level; they can also optionally name a favorite artist to give that factor a small bonus.
 
 - How does the model turn those into a score  
-  The model checks whether the song's genre and mood match the user's preferences (earning full credit or none), then calculates how close the song's energy is to the user's target, and adds a small bonus if the artist matches — each piece is multiplied by its weight and added together to produce a final score between 0 and 1.
+  The model checks whether the song's genre and mood match the user's preferences (earning full credit or none), then calculates how close the song's energy is to the user's target, and adds a small bonus if the artist matches each piece is multiplied by its weight and added together to produce a final score between 0 and 1.
 
 - What changes did you make from the starter logic  
   Artist preference was added as a fourth scoring factor with a 10% weight, and the remaining weights were tuned so genre (35%), mood (30%), and energy (25%) reflect how most listeners prioritize those qualities.
